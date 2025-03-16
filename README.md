@@ -1,72 +1,70 @@
-```markdown
-# FuzzyMatchChatbot
+**FuzzyMatchChatbot** adalah proyek chatbot berbasis Python yang menggunakan metode pencocokan fleksibel (*fuzzy matching*) untuk memberikan jawaban yang lebih relevan terhadap pertanyaan pengguna. Data chatbot disimpan dalam format H5 untuk efisiensi dan proyek ini dikembangkan sebagai mikroservice menggunakan Flask.  
 
-Proyek ini adalah chatbot Python yang menggunakan pencocokan fleksibel (*fuzzy matching*) untuk memberikan respons yang lebih relevan terhadap pertanyaan pengguna. Data disimpan dalam format H5 untuk efisiensi, dan proyek ini dibangun sebagai mikroservice menggunakan Flask.
+### **Fitur Utama:**  
+1. **Pencocokan Fleksibel (Fuzzy Matching)**  
+   Chatbot ini menggunakan algoritma `difflib.get_close_matches` untuk mengenali pertanyaan yang mirip, meskipun tidak ditulis persis seperti data yang tersimpan.  
 
-## Fitur Utama
+2. **Penyimpanan Data dalam Format H5**  
+   Dataset chatbot disimpan dalam file H5 agar lebih efisien dan cepat diakses.  
 
-- **Pencocokan Fleksibel (Fuzzy Matching):** Menggunakan algoritma `difflib.get_close_matches` untuk mengenali dan merespons pertanyaan yang mirip, bahkan jika tidak persis sama dengan data yang tersimpan.
-- **Penyimpanan Data H5:** Menyimpan dataset dalam format H5 untuk efisiensi dan kecepatan akses.
-- **Mikroservice Flask:** Dibangun sebagai mikroservice menggunakan Flask, memungkinkan integrasi yang mudah dengan aplikasi lain.
-- **Respons yang Relevan:** Meningkatkan interaktivitas dan kemampuan chatbot dalam memahami variasi bahasa alami.
+3. **Dibangun sebagai Mikroservice dengan Flask**  
+   Aplikasi ini dikembangkan menggunakan Flask sehingga bisa diintegrasikan dengan aplikasi lain dengan mudah.  
 
-## Cara Penggunaan
+4. **Respons yang Relevan**  
+   Dengan metode pencocokan fuzzy, chatbot dapat memahami variasi bahasa alami dan memberikan jawaban yang lebih akurat.  
 
-1. **Clone repositori:**
-    ```bash
-    git clone https://github.com/AldevaRizky/FuzzyMatchChatbot.git
-    cd FuzzyMatchChatbot
-    ```
+### **Cara Menggunakan:**  
+1. **Clone repositori GitHub**  
+   Jalankan perintah berikut untuk mengunduh proyek:  
+   ```bash
+   git clone https://github.com/AldevaRizky/FuzzyMatchChatbot.git
+   cd FuzzyMatchChatbot
+   ```  
 
-2. **Instal dependensi:**
-    ```bash
-    pip install Flask h5py
-    ```
+2. **Install dependensi yang diperlukan**  
+   Pastikan Python sudah terinstal, lalu jalankan perintah berikut:  
+   ```bash
+   pip install Flask h5py
+   ```  
 
-3. **Jalankan aplikasi:**
-    ```bash
-    python app.py
-    ```
+3. **Menjalankan aplikasi**  
+   Setelah semua dependensi terinstal, jalankan chatbot dengan perintah berikut:  
+   ```bash
+   python app.py
+   ```  
+   Aplikasi akan berjalan di alamat `http://127.0.0.1:5000/api/chatbot`.  
 
-    Aplikasi akan berjalan di `http://127.0.0.1:5000/api/chatbot`.
+4. **Menguji API Chatbot**  
+   Gunakan Postman atau aplikasi serupa untuk mengirimkan permintaan POST ke endpoint `/api/chatbot` dengan format JSON berikut:  
+   ```json
+   {
+     "question": "Apa kamu tahu Laravel?"
+   }
+   ```  
+   Chatbot akan merespons dengan jawaban yang sesuai, misalnya:  
+   ```json
+   {
+     "question": "Apa kamu tahu Laravel?",
+     "answer": "Laravel adalah framework PHP untuk pengembangan aplikasi web."
+   }
+   ```  
 
-4. **Gunakan Postman atau alat serupa untuk mengirim permintaan POST ke endpoint `/api/chatbot` dengan format JSON:**
-    ```json
-    {
-      "question": "Apa kamu tahu Laravel?"
-    }
-    ```
+### **Struktur Proyek:**  
+- **`app.py`** → Kode utama aplikasi Flask  
+- **`create_h5.py`** → Skrip untuk membuat dataset H5  
+- **`data.h5`** → Dataset chatbot dalam format H5  
+- **`README.md`** → Dokumentasi proyek  
 
-    Respons yang diharapkan:
-    ```json
-    {
-      "question": "Apa kamu tahu Laravel?",
-      "answer": "Laravel adalah framework PHP untuk pengembangan aplikasi web."
-    }
-    ```
+### **Cara Kerja Chatbot:**  
+1. Semua pertanyaan dan jawaban chatbot disimpan dalam file `data.h5`.  
+2. Aplikasi Flask menerima pertanyaan dari pengguna melalui endpoint `/api/chatbot`.  
+3. Fungsi `find_answer` menggunakan `difflib.get_close_matches` untuk mencari pertanyaan yang paling mirip dalam dataset.  
+4. Jika ada pertanyaan yang cocok, chatbot akan mengembalikan jawaban yang sesuai.  
+5. Jika tidak ditemukan jawaban yang relevan, chatbot akan memberikan respons default:  
+   **"Maaf, saya tidak menemukan jawaban yang relevan."**  
 
-## Struktur Proyek
+### **Kontribusi:**  
+Jika ingin berkontribusi, silakan buat *pull request* di repositori GitHub untuk membantu meningkatkan akurasi dan fitur chatbot ini.  
 
-```
-FuzzyMatchChatbot/
-├── app.py        # Kode utama aplikasi Flask
-├── create_h5.py  # Skrip untuk membuat dataset H5
-├── data.h5       # Dataset chatbot dalam format H5
-└── README.md     # File dokumentasi proyek
-```
-
-## Cara Kerja
-
-1. Dataset pertanyaan dan jawaban disimpan dalam file `data.h5`.
-2. Aplikasi Flask (`app.py`) menerima pertanyaan dari pengguna melalui endpoint `/api/chatbot`.
-3. Fungsi `find_answer` menggunakan `difflib.get_close_matches` untuk mencari pertanyaan yang mirip dalam dataset.
-4. Jika ditemukan pertanyaan yang mirip, jawaban yang sesuai dikembalikan.
-5. Jika tidak ditemukan, respons default `"Maaf, saya tidak menemukan jawaban yang relevan."` dikembalikan.
-
-## Kontribusi
-
-Kontribusi dalam bentuk *pull request* sangat diharapkan untuk meningkatkan fungsionalitas dan akurasi chatbot.
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah Lisensi MIT.
+### **Lisensi:**  
+Proyek ini menggunakan **Lisensi MIT**, sehingga bebas digunakan dan dikembangkan lebih lanjut.
